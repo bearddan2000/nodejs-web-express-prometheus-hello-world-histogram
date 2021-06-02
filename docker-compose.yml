@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  prom:
+    image: prom/prometheus:latest
+    ports:
+      - "81:9090"
+    volumes:
+      - ./prom/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  site1:
+    build: site1
+    ports:
+      - "80:8000"
+    links:
+      - prom
+    depends_on:
+      - prom
